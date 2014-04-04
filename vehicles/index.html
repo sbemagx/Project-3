@@ -1,0 +1,132 @@
+<html>
+
+<!--
+The shape and location of the triangle drawn when the key `0` is held
+down is determined by [the JSON data provided](https://github.com/DGMD-E-15
+/Processing-Tutorial-01/blob/master/16.html#L26-30).
+-->
+
+<head>
+    <script src='processing-1.4.1.js'></script>
+    <style>
+    canvas {
+        outline: none;
+    }
+    /* So that when we click, the canvas isn't outlined */
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+</body>
+
+<script>
+/* @pjs font="Arial.ttf"; */
+
+var canvas = document.getElementsByTagName('canvas')[0];
+
+var data = {};
+
+function sketch(p) {
+
+    data = {
+        '1': [8, 4],
+        '2': [8, 10],
+        '3': [10, 7]
+    }
+
+    speedActor = 1;
+    speedAntagonist = -.5;
+    directionActor = [1,0];
+    directionAntagonist = [0,-1]
+
+    threshold = 15;
+
+    function setup() {
+        p.size(800, 800);
+
+        p.ellipseMode(p.CENTER);
+        p.rectMode(p.CENTER);
+
+        p.println("width: " + p.width + ", height: " + p.height);
+
+        x = p.width / 2;
+        y = p.height / 2;
+
+
+        a = 0;
+
+        ellipseX = [x, 600, 100];
+        ellipseY = [y, 500, 200];
+
+        p.textFont(p.createFont("Arial", 32));
+        p.background(0);
+
+        // initial location is in the middle of the grid
+
+        //p.noLoop();
+    }
+
+    function draw() {
+
+
+        // draw our main actor
+        p.fill(204, 102, 0);
+        p.ellipse(ellipseX[0], ellipseY[0], 10, 10);
+
+        // draw the first antagonist
+        p.fill(20, 102, 0);
+        p.ellipse(ellipseX[1], ellipseY[1], 50, 50);
+
+        // motion
+        move();
+    }
+
+    function move() {
+        // calculate speed in relation to the first antagonist
+        // dist = sqrt( (x2-x1)^2 +(y2-y1)^2 )
+
+        dist = Math.sqrt( Math.abs((ellipseX[1] - ellipseX[0])^2) + Math.abs((ellipseY[1] - ellipseY[0])^2) );
+
+        // if (dist < threshold) {
+        //     directionActor[0] = dist / threshold;
+        //     p.println("speedActor: " + speedActor);
+        //     p.println("dist: " + dist);
+        // }
+        mod = 0;
+        force = 1/(dist^2);
+
+            //ellipseX[0] = ellipseX[0] + directionActor[0] + force;
+            ellipseY[0] = ellipseY[0] + directionActor[1] + force; 
+
+
+        ellipseX[0] = ellipseX[0] + directionActor[0];
+        ellipseY[0] = ellipseY[0] + directionActor[1];
+
+        ellipseX[1] = ellipseX[1] + directionAntagonist[0];
+        ellipseY[1] = ellipseY[1] + directionAntagonist[1];
+
+        if (ellipseX[0] > 795 || ellipseX[0] < 5) {
+            directionActor[0] = directionActor[0] * -1;
+        }
+        if (ellipseX[1] > 795 || ellipseX[1] < 5) {
+            directionAntagonist[1] = directionAntagonist[1] * -1;
+        }        
+        if (ellipseY[0] > 795 || ellipseY[0] < 5) {
+            directionActor[0] = directionActor[0] * -1;
+        }
+        if (ellipseY[1] > 795 || ellipseY[1] < 5) {
+            directionAntagonist[1] = directionAntagonist[1] * -1;
+        } 
+
+    }
+
+    p.setup = setup;
+    p.draw = draw;
+
+}
+
+var p = new Processing(canvas, sketch); // actually attach and run the sketch
+</script>
+
+</html>
