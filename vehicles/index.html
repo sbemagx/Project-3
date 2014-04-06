@@ -38,7 +38,7 @@ function sketch(p) {
     speedActor = 1;
     speedAntagonist = -.5;
     directionActor = [1,0];
-    directionAntagonist = [0,-1]
+    directionAntagonist = [0,.1];
 
     threshold = 15;
 
@@ -56,8 +56,8 @@ function sketch(p) {
 
         a = 0;
 
-        ellipseX = [x, 600, 100];
-        ellipseY = [y, 500, 200];
+        ellipseX = [x, 500, 100];
+        ellipseY = [y, 400, 300];
 
         p.textFont(p.createFont("Arial", 32));
         p.background(0);
@@ -94,9 +94,10 @@ function sketch(p) {
         //     p.println("dist: " + dist);
         // }
         mod = 0;
-        force = 1/(dist^2);
+        force = 1/(dist^4);
 
             //ellipseX[0] = ellipseX[0] + directionActor[0] + force;
+            force = ellipseX[0] < ellipseX[1] ? force : force *-1;
             ellipseY[0] = ellipseY[0] + directionActor[1] + force; 
 
 
