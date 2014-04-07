@@ -7,7 +7,7 @@
 // including how to get a key, at http://developer.echonest.com/docs/v4
 
 var ENAPI = 'https://developer.echonest.com/api/v4/';
-var ENAPIKey = '0TPFPI9TGBX5CJU49';
+var ENAPIKey = '5SYBM9AZZN9FCODYQ';
 
 
 function ENSearch(track) {
