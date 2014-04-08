@@ -141,7 +141,8 @@ function cellsFromTrackAndAttrs(track, attrs) {
         ['tempo', attrs['data-tempo'] > 0 ? // if we have a number
             Math.round(attrs['data-tempo']) : // round it
             '-'
-        ] // otherwise, display it as '-'
+        ], // otherwise, display it as '-'
+        ['valence', attrs['data-valence']]
     ];
 
     // (1) Iterate over those cells & wrap that content in an appropriate Node
