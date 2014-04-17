@@ -16,8 +16,7 @@ var tracks = [];
 // (1) We're going to construct our search using Spotify's API, in our case
 // searching for Kanye West and limiting our results to 10 tracks
 var search = 'Arcade Fire';
-var maxTracks = 10;
-
+var maxTracks = 100;
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -29,7 +28,8 @@ window.onload = function() {
     tracks = SPSearch('track', search).tracks;
 
     // (1) Limit our results list
-    var numTracks = Math.min(maxTracks, tracks.length);
+    var numTracks = 100;
+    //var numTracks = Math.min(maxTracks, tracks.length);
     tracks = tracks.slice(0, numTracks);
 
     // (1) Iterate over our tracks and 
@@ -86,7 +86,8 @@ function rowAttrsFromTrack(track) {
         // more about it at:
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator
         'data-tempo': track.echo ? track.echo.audio_summary.tempo : -1,
-        'data-valence': track.echo.audio_summary.valence
+        'data-valence': track.echo.audio_summary.valence,
+        'data-popularity': track.popularity        
     };
 
     return attrs;
@@ -142,7 +143,8 @@ function cellsFromTrackAndAttrs(track, attrs) {
             Math.round(attrs['data-tempo']) : // round it
             '-'
         ], // otherwise, display it as '-'
-        ['valence', attrs['data-valence']]
+        ['valence', attrs['data-valence']],
+        ['popularity', attrs['data-popularity']]        
     ];
 
     // (1) Iterate over those cells & wrap that content in an appropriate Node
